@@ -1,0 +1,443 @@
+
+GSMmodule.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001e8  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000002a  00800060  000001e8  0000025c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000286  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002b8  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  000002f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000983  00000000  00000000  0000031c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000623  00000000  00000000  00000c9f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003c3  00000000  00000000  000012c2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000034  00000000  00000000  00001688  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000036f  00000000  00000000  000016bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000003b2  00000000  00000000  00001a2b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000030  00000000  00000000  00001ddd  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e8 ee       	ldi	r30, 0xE8	; 232
+  68:	f1 e0       	ldi	r31, 0x01	; 1
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	aa 38       	cpi	r26, 0x8A	; 138
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 da 00 	call	0x1b4	; 0x1b4 <main>
+  7a:	0c 94 f2 00 	jmp	0x1e4	; 0x1e4 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <_Z3gsmv>:
+unsigned char number[]={"+8801748812048"};
+
+void gsm()
+{
+	//_delay_ms(50);		//omittable??
+	PORTB |= 0x01;
+  82:	c0 9a       	sbi	0x18, 0	; 24
+	
+	// handshake: Send "AT"
+	for(int i=0; i<2; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+  84:	5d 9b       	sbis	0x0b, 5	; 11
+  86:	fe cf       	rjmp	.-4      	; 0x84 <_Z3gsmv+0x2>
+		{
+			//_delay_ms(50);	// May be omittable
+		}
+		UDR = cmd1[i];
+  88:	80 91 87 00 	lds	r24, 0x0087	; 0x800087 <cmd1>
+  8c:	8c b9       	out	0x0c, r24	; 12
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  8e:	83 ed       	ldi	r24, 0xD3	; 211
+  90:	90 e3       	ldi	r25, 0x30	; 48
+  92:	01 97       	sbiw	r24, 0x01	; 1
+  94:	f1 f7       	brne	.-4      	; 0x92 <_Z3gsmv+0x10>
+  96:	00 c0       	rjmp	.+0      	; 0x98 <_Z3gsmv+0x16>
+  98:	00 00       	nop
+	PORTB |= 0x01;
+	
+	// handshake: Send "AT"
+	for(int i=0; i<2; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+  9a:	5d 9b       	sbis	0x0b, 5	; 11
+  9c:	fe cf       	rjmp	.-4      	; 0x9a <_Z3gsmv+0x18>
+		{
+			//_delay_ms(50);	// May be omittable
+		}
+		UDR = cmd1[i];
+  9e:	80 91 88 00 	lds	r24, 0x0088	; 0x800088 <cmd1+0x1>
+  a2:	8c b9       	out	0x0c, r24	; 12
+  a4:	83 ed       	ldi	r24, 0xD3	; 211
+  a6:	90 e3       	ldi	r25, 0x30	; 48
+  a8:	01 97       	sbiw	r24, 0x01	; 1
+  aa:	f1 f7       	brne	.-4      	; 0xa8 <_Z3gsmv+0x26>
+  ac:	00 c0       	rjmp	.+0      	; 0xae <_Z3gsmv+0x2c>
+  ae:	00 00       	nop
+		_delay_ms(50);
+	}
+	
+	// Carriage return
+	while((UCSRA & (1<<UDRE)) == 0x00)
+  b0:	5d 9b       	sbis	0x0b, 5	; 11
+  b2:	fe cf       	rjmp	.-4      	; 0xb0 <_Z3gsmv+0x2e>
+	{
+		//_delay_ms(50);	// May be omittable
+	}
+	UDR = '\r';
+  b4:	8d e0       	ldi	r24, 0x0D	; 13
+  b6:	8c b9       	out	0x0c, r24	; 12
+  b8:	83 ed       	ldi	r24, 0xD3	; 211
+  ba:	90 e3       	ldi	r25, 0x30	; 48
+  bc:	01 97       	sbiw	r24, 0x01	; 1
+  be:	f1 f7       	brne	.-4      	; 0xbc <_Z3gsmv+0x3a>
+  c0:	00 c0       	rjmp	.+0      	; 0xc2 <_Z3gsmv+0x40>
+  c2:	00 00       	nop
+  c4:	ed e7       	ldi	r30, 0x7D	; 125
+  c6:	f0 e0       	ldi	r31, 0x00	; 0
+  c8:	26 e8       	ldi	r18, 0x86	; 134
+  ca:	30 e0       	ldi	r19, 0x00	; 0
+	_delay_ms(50);
+	
+	// text mode: send "AT+CMGF=1"
+	for(int i=0; i<9; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+  cc:	5d 9b       	sbis	0x0b, 5	; 11
+  ce:	fe cf       	rjmp	.-4      	; 0xcc <_Z3gsmv+0x4a>
+		{
+			//_delay_ms(50);	// May be omittable
+		}
+		UDR = cmd2[i];
+  d0:	81 91       	ld	r24, Z+
+  d2:	8c b9       	out	0x0c, r24	; 12
+  d4:	83 ed       	ldi	r24, 0xD3	; 211
+  d6:	90 e3       	ldi	r25, 0x30	; 48
+  d8:	01 97       	sbiw	r24, 0x01	; 1
+  da:	f1 f7       	brne	.-4      	; 0xd8 <_Z3gsmv+0x56>
+  dc:	00 c0       	rjmp	.+0      	; 0xde <_Z3gsmv+0x5c>
+  de:	00 00       	nop
+	}
+	UDR = '\r';
+	_delay_ms(50);
+	
+	// text mode: send "AT+CMGF=1"
+	for(int i=0; i<9; i++)
+  e0:	e2 17       	cp	r30, r18
+  e2:	f3 07       	cpc	r31, r19
+  e4:	99 f7       	brne	.-26     	; 0xcc <_Z3gsmv+0x4a>
+		UDR = cmd2[i];
+		_delay_ms(50);
+	}
+	
+	// Carriage return
+	while((UCSRA & (1<<UDRE)) == 0x00)
+  e6:	5d 9b       	sbis	0x0b, 5	; 11
+  e8:	fe cf       	rjmp	.-4      	; 0xe6 <_Z3gsmv+0x64>
+	{
+		//_delay_ms(50);	// May be omittable
+	}
+	UDR = '\r';
+  ea:	8d e0       	ldi	r24, 0x0D	; 13
+  ec:	8c b9       	out	0x0c, r24	; 12
+  ee:	83 ed       	ldi	r24, 0xD3	; 211
+  f0:	90 e3       	ldi	r25, 0x30	; 48
+  f2:	01 97       	sbiw	r24, 0x01	; 1
+  f4:	f1 f7       	brne	.-4      	; 0xf2 <_Z3gsmv+0x70>
+  f6:	00 c0       	rjmp	.+0      	; 0xf8 <_Z3gsmv+0x76>
+  f8:	00 00       	nop
+  fa:	e4 e7       	ldi	r30, 0x74	; 116
+  fc:	f0 e0       	ldi	r31, 0x00	; 0
+  fe:	2c e7       	ldi	r18, 0x7C	; 124
+ 100:	30 e0       	ldi	r19, 0x00	; 0
+	_delay_ms(50);
+	
+	// send mode: send "AT+CMGS="
+	for(int i=0; i<8; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+ 102:	5d 9b       	sbis	0x0b, 5	; 11
+ 104:	fe cf       	rjmp	.-4      	; 0x102 <_Z3gsmv+0x80>
+		{
+			//_delay_ms(50);	// May be omittable
+		}
+		UDR = cmd3[i];
+ 106:	81 91       	ld	r24, Z+
+ 108:	8c b9       	out	0x0c, r24	; 12
+ 10a:	83 ed       	ldi	r24, 0xD3	; 211
+ 10c:	90 e3       	ldi	r25, 0x30	; 48
+ 10e:	01 97       	sbiw	r24, 0x01	; 1
+ 110:	f1 f7       	brne	.-4      	; 0x10e <_Z3gsmv+0x8c>
+ 112:	00 c0       	rjmp	.+0      	; 0x114 <_Z3gsmv+0x92>
+ 114:	00 00       	nop
+	}
+	UDR = '\r';
+	_delay_ms(50);
+	
+	// send mode: send "AT+CMGS="
+	for(int i=0; i<8; i++)
+ 116:	2e 17       	cp	r18, r30
+ 118:	3f 07       	cpc	r19, r31
+ 11a:	99 f7       	brne	.-26     	; 0x102 <_Z3gsmv+0x80>
+		}
+		UDR = cmd3[i];
+		_delay_ms(50);
+	}
+	
+	while((UCSRA & (1<<UDRE)) == 0x00)
+ 11c:	5d 9b       	sbis	0x0b, 5	; 11
+ 11e:	fe cf       	rjmp	.-4      	; 0x11c <_Z3gsmv+0x9a>
+	{
+		//_delay_ms(50);
+	}
+	UDR = '"';
+ 120:	82 e2       	ldi	r24, 0x22	; 34
+ 122:	8c b9       	out	0x0c, r24	; 12
+ 124:	83 ed       	ldi	r24, 0xD3	; 211
+ 126:	90 e3       	ldi	r25, 0x30	; 48
+ 128:	01 97       	sbiw	r24, 0x01	; 1
+ 12a:	f1 f7       	brne	.-4      	; 0x128 <_Z3gsmv+0xa6>
+ 12c:	00 c0       	rjmp	.+0      	; 0x12e <_Z3gsmv+0xac>
+ 12e:	00 00       	nop
+ 130:	e0 e6       	ldi	r30, 0x60	; 96
+ 132:	f0 e0       	ldi	r31, 0x00	; 0
+ 134:	2e e6       	ldi	r18, 0x6E	; 110
+ 136:	30 e0       	ldi	r19, 0x00	; 0
+	_delay_ms(50);
+	
+	// send number
+	for(int i=0; i<14; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+ 138:	5d 9b       	sbis	0x0b, 5	; 11
+ 13a:	fe cf       	rjmp	.-4      	; 0x138 <_Z3gsmv+0xb6>
+		{
+			//_delay_ms(50);
+		}
+		UDR = number[i];
+ 13c:	81 91       	ld	r24, Z+
+ 13e:	8c b9       	out	0x0c, r24	; 12
+ 140:	83 ed       	ldi	r24, 0xD3	; 211
+ 142:	90 e3       	ldi	r25, 0x30	; 48
+ 144:	01 97       	sbiw	r24, 0x01	; 1
+ 146:	f1 f7       	brne	.-4      	; 0x144 <_Z3gsmv+0xc2>
+ 148:	00 c0       	rjmp	.+0      	; 0x14a <_Z3gsmv+0xc8>
+ 14a:	00 00       	nop
+	}
+	UDR = '"';
+	_delay_ms(50);
+	
+	// send number
+	for(int i=0; i<14; i++)
+ 14c:	2e 17       	cp	r18, r30
+ 14e:	3f 07       	cpc	r19, r31
+ 150:	99 f7       	brne	.-26     	; 0x138 <_Z3gsmv+0xb6>
+		}
+		UDR = number[i];
+		_delay_ms(50);
+	}
+	
+	while((UCSRA & (1<<UDRE)) == 0x00)
+ 152:	5d 9b       	sbis	0x0b, 5	; 11
+ 154:	fe cf       	rjmp	.-4      	; 0x152 <_Z3gsmv+0xd0>
+	{
+		//_delay_ms(50);
+	}
+	UDR = '"';
+ 156:	82 e2       	ldi	r24, 0x22	; 34
+ 158:	8c b9       	out	0x0c, r24	; 12
+ 15a:	83 ed       	ldi	r24, 0xD3	; 211
+ 15c:	90 e3       	ldi	r25, 0x30	; 48
+ 15e:	01 97       	sbiw	r24, 0x01	; 1
+ 160:	f1 f7       	brne	.-4      	; 0x15e <_Z3gsmv+0xdc>
+ 162:	00 c0       	rjmp	.+0      	; 0x164 <_Z3gsmv+0xe2>
+ 164:	00 00       	nop
+	_delay_ms(50);
+	
+	// Carriage return
+	while((UCSRA & (1<<UDRE)) == 0x00)
+ 166:	5d 9b       	sbis	0x0b, 5	; 11
+ 168:	fe cf       	rjmp	.-4      	; 0x166 <_Z3gsmv+0xe4>
+	{
+		//_delay_ms(50);	// May be omittable
+	}
+	UDR = '\r';
+ 16a:	8d e0       	ldi	r24, 0x0D	; 13
+ 16c:	8c b9       	out	0x0c, r24	; 12
+ 16e:	83 ed       	ldi	r24, 0xD3	; 211
+ 170:	90 e3       	ldi	r25, 0x30	; 48
+ 172:	01 97       	sbiw	r24, 0x01	; 1
+ 174:	f1 f7       	brne	.-4      	; 0x172 <_Z3gsmv+0xf0>
+ 176:	00 c0       	rjmp	.+0      	; 0x178 <_Z3gsmv+0xf6>
+ 178:	00 00       	nop
+ 17a:	ef e6       	ldi	r30, 0x6F	; 111
+ 17c:	f0 e0       	ldi	r31, 0x00	; 0
+ 17e:	23 e7       	ldi	r18, 0x73	; 115
+ 180:	30 e0       	ldi	r19, 0x00	; 0
+	_delay_ms(50);
+	
+	// send message
+	for(int i=0; i<4; i++)
+	{
+		while((UCSRA & (1<<UDRE)) == 0x00)
+ 182:	5d 9b       	sbis	0x0b, 5	; 11
+ 184:	fe cf       	rjmp	.-4      	; 0x182 <_Z3gsmv+0x100>
+		{
+			//_delay_ms(50);	// May be omittable
+		}
+		UDR = msg[i];
+ 186:	81 91       	ld	r24, Z+
+ 188:	8c b9       	out	0x0c, r24	; 12
+ 18a:	83 ed       	ldi	r24, 0xD3	; 211
+ 18c:	90 e3       	ldi	r25, 0x30	; 48
+ 18e:	01 97       	sbiw	r24, 0x01	; 1
+ 190:	f1 f7       	brne	.-4      	; 0x18e <_Z3gsmv+0x10c>
+ 192:	00 c0       	rjmp	.+0      	; 0x194 <_Z3gsmv+0x112>
+ 194:	00 00       	nop
+	}
+	UDR = '\r';
+	_delay_ms(50);
+	
+	// send message
+	for(int i=0; i<4; i++)
+ 196:	2e 17       	cp	r18, r30
+ 198:	3f 07       	cpc	r19, r31
+ 19a:	99 f7       	brne	.-26     	; 0x182 <_Z3gsmv+0x100>
+		}
+		UDR = msg[i];
+		_delay_ms(50);
+	}
+	
+	while((UCSRA & (1<<UDRE)) == 0x00)
+ 19c:	5d 9b       	sbis	0x0b, 5	; 11
+ 19e:	fe cf       	rjmp	.-4      	; 0x19c <_Z3gsmv+0x11a>
+	{
+		//_delay_ms(50);
+	}
+
+	//send
+	UDR = (char) 26;
+ 1a0:	8a e1       	ldi	r24, 0x1A	; 26
+ 1a2:	8c b9       	out	0x0c, r24	; 12
+ 1a4:	83 ed       	ldi	r24, 0xD3	; 211
+ 1a6:	90 e3       	ldi	r25, 0x30	; 48
+ 1a8:	01 97       	sbiw	r24, 0x01	; 1
+ 1aa:	f1 f7       	brne	.-4      	; 0x1a8 <_Z3gsmv+0x126>
+ 1ac:	00 c0       	rjmp	.+0      	; 0x1ae <_Z3gsmv+0x12c>
+ 1ae:	00 00       	nop
+	_delay_ms(50);
+	PORTB = 0x00;
+ 1b0:	18 ba       	out	0x18, r1	; 24
+ 1b2:	08 95       	ret
+
+000001b4 <main>:
+}
+
+int main(void)
+{
+	UCSRA = 0x00;
+ 1b4:	1b b8       	out	0x0b, r1	; 11
+	UCSRB = 0x00;
+ 1b6:	1a b8       	out	0x0a, r1	; 10
+	UCSRC = 0x00;
+ 1b8:	10 bc       	out	0x20, r1	; 32
+	UBRRH = 0x00;
+ 1ba:	10 bc       	out	0x20, r1	; 32
+	UBRRL = 0x0C;	// UBRR = 12.02
+ 1bc:	8c e0       	ldi	r24, 0x0C	; 12
+ 1be:	89 b9       	out	0x09, r24	; 9
+	
+	UCSRA |= (1<<U2X);	// Double processor speed
+ 1c0:	59 9a       	sbi	0x0b, 1	; 11
+	UCSRB |= (1<<TXEN) | (1<<RXEN);	// Enable TX and RX pin
+ 1c2:	8a b1       	in	r24, 0x0a	; 10
+ 1c4:	88 61       	ori	r24, 0x18	; 24
+ 1c6:	8a b9       	out	0x0a, r24	; 10
+	UCSRC |= (1<<URSEL) | (1<<UCSZ1) | (1<<UCSZ0);	// URSEL = Activate UCSRC
+ 1c8:	80 b5       	in	r24, 0x20	; 32
+ 1ca:	86 68       	ori	r24, 0x86	; 134
+ 1cc:	80 bd       	out	0x20, r24	; 32
+													// UCSZ1:UCSZ0 = 8 bit data
+	DDRA |= 0xFC;	// PINA0 Input
+ 1ce:	8a b3       	in	r24, 0x1a	; 26
+ 1d0:	8c 6f       	ori	r24, 0xFC	; 252
+ 1d2:	8a bb       	out	0x1a, r24	; 26
+	DDRB |= 0xFF;
+ 1d4:	87 b3       	in	r24, 0x17	; 23
+ 1d6:	8f ef       	ldi	r24, 0xFF	; 255
+ 1d8:	87 bb       	out	0x17, r24	; 23
+	
+	
+    while (1) 
+    {
+		if((PINA) & (1<<PINA0))
+ 1da:	c8 9b       	sbis	0x19, 0	; 25
+ 1dc:	fe cf       	rjmp	.-4      	; 0x1da <main+0x26>
+		{
+			gsm();
+ 1de:	0e 94 41 00 	call	0x82	; 0x82 <_Z3gsmv>
+ 1e2:	fb cf       	rjmp	.-10     	; 0x1da <main+0x26>
+
+000001e4 <_exit>:
+ 1e4:	f8 94       	cli
+
+000001e6 <__stop_program>:
+ 1e6:	ff cf       	rjmp	.-2      	; 0x1e6 <__stop_program>

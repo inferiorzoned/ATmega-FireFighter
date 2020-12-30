@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ATmega FireFighter: Microcontroller Project</title>
+        <link rel="icon" href="https://cse.buet.ac.bd/assets/img/logo.png">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <style>
+            html,
+            body,
+            .page {
+              height: 100%; /* needed for proper layout */
+            }
+
+            body {
+              overflow: hidden;
+              background-color: sepia;
+            }
+
+            .page {
+              display: flex;
+              flex-direction: column;
+            }
+
+            .page-header {
+                flex: 0 0 auto;
+                /*flex: 10%;*/
+                background-color: #dcdcdc;
+                text-align: center;
+                height: 5%;
+                padding-top: 10px;
+                padding-bottom: 10px;
+                font-size: 40px;
+            }
+
+            .page-content {
+                display: flex;
+                /*flex: 1 1 auto;*/
+                flex: 85%;
+                flex-direction: row;
+                position: relative;/* need this to position inner content */
+                overflow-y: auto;
+            }
+
+            .side-bar {
+                flex: 15%;
+                background-color: rgb(194, 31, 26);
+                overflow-y: auto;
+                padding: 10px;
+            }
+
+            /* Style the side bar links */
+            .side-bar a {
+              color: white;
+              padding-top: 10px;
+              text-decoration: none;
+              text-align: left;
+              font-size: 15px;
+            }
+
+            /* Change color on hover */
+            .side-bar a:hover {
+              /*background-color: #ddd;*/
+              color: black;
+            }
+            .article {
+                flex: 85%;
+                /*overflow-wrap: normal;*/
+                overflow-y: auto;
+                padding: 10px;
+            }
+
+            .page-footer {
+                flex: 0 0 auto;
+                /*flex: 5%;*/
+                background-color: #dcdcdc;
+                text-align: center;
+                height: 25px;
+                padding-top: 2px;
+                padding-bottom: 2px;
+                font-size: 15px;
+            }
+
+            .header {
+              padding: 1px;
+              background-color:#EFE0B9;
+              width: 100%;
+            }
+
+            h3 {
+              text-align: center;
+            }
+
+            p {
+              padding-left: 5%;
+              padding-right: 5%;
+              font-size: 18px;
+            }
+
+            table {
+              width: 500px;
+            }
+            table, th, td {
+              border: 1px solid black;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 10px;
+              text-align: left;
+            }
+            table tr:nth-child(odd) {
+              background-color: rgb(255, 255, 255);
+            }
+            table tr:nth-child(even) {
+              background-color: rgb(224, 216, 216);
+            }
+
+            @media screen and (max-width: 700px) {
+                .page-header {
+                    font-size: 40px;
+                }
+
+                .page-content {
+                    flex-direction: column;
+                }
+            }
+
+            @media screen and (max-width: 300px) {
+                .page-header {
+                    font-size: 25px;
+                }
+                .side-bar {
+                  flex: 20%;
+                }
+                .article {
+                  flex: 80%;
+                }
+                .page-content {
+                    flex-direction: column;
+                }
+                .page-footer {
+                    height: 30px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="page">
+            <div class="page-header">ATmega FireFighter</div>
+            <div class="page-content">
+                <div class="side-bar">
+                    <a href="#introduction">Introduction</a><br/><br/>
+                    <a href="#project-description">A Brief Description</a><br/><br/>
+                    <a href="#how-it-works">How it works?</a><br/><br/>
+                    <a href="#equipments">Equipments</a><br/><br/>
+                    <a href="#block-diagram">Block Diagram</a><br/><br/>
+                    <a href="#algorithm">Algorithm</a><br/><br/>
+                    <a href="#hardware-part">Hardware Part</a>
+                    <ul>
+                      <li><a href="#flame-sensor">Flame Sensor</a></li>
+                      <li><a href="#servo-motor">Servo Motor</a></li>
+                      <li><a href="#pump-motor">Motor Driver and Pump Motor</a></li>
+                      <li><a href="#gsm-module">GSM Module</a></li>
+                      <li><a href="#lcd-module">LCD Module</a></li>
+                    </ul>
+                    <a href="#software-part">Software Part</a><br/><br/>
+                    <a href="#pin-diagram">Detailed Pin Diagram</a><br/><br/>
+                    <a href="#problem">Problem Faced</a><br/><br/>
+                    <a href="#conclusion">Conclusion</a><br/><br/>
+                    <a href="#demonstration">Demonstration</a><br/><br/>
+                    <a href="#group-members">Group Members</a><br/><br/>
+                    <a href="#instructors">Course Instructors</a><br/><br/>
+
+                </div>
+                <div class="article">
+                    <div id="introduction" class="header">
+                      <h3>Introduction</h3>
+                    </div>
+                    <p>
+                      As a part of <em>CSE 316: Microcontrollers, Microprocessors and Embedded Systems</em> sessional course, we have created a prototype of an automated and primary fire prevention system as term project. We named the project <em><b>ATmega FireFighter</b></em>.
+                    </p>
+                    <p>
+                      On 20 February 2019, a massive fire accident took place at Chowkbazar, Dhaka. At least 80 people were dead and 50 others were injured in that accident<sup><a href="https://en.wikipedia.org/wiki/2019_Dhaka_fire" target="_blank">[1]</a></sup>. Also a tragic video of that accident became viral on social media. We were deeply touched by that event. A series of fire accidents also took place around that time. So we wanted to build a prototype which can take an instant primary action against fire accident happened in home or office place.
+                    </p>
+                    <p>
+                      We also thought, as this project includes sensors, motors, GSM module and also we may need to trigger some actions in case of a particular event e.g. fire, we can learn a significant amount about the practical use of microcontroller.
+                    </p>
+
+                    <div id="project-description" class="header">
+                        <h3>A Brief Description</h3>
+                    </div>
+                    <p>
+                      <em><b>ATmega FireFighter</b></em> is an ATmega32-based project. In this project, we designed a system that can take an instant primary action to extinguish or at least stop spreading of the fire. The system also sends an alert SMS to the home owner or authority's mobile number when it detects fire incident. The project consists of a hardware part and a software part. In the hardware part, we had to setup some devices and establish a circuit connection. Details are given in the <a href="#hardware-part"><i>Hardware Part</i></a> section. In the software part, we had to develop two programs in C language to control the relevant ATmega32 microcontrollers. Details are given in the <a href="software-part"><i>Software Part</i></a> section.
+                    </p>
+
+                    <div id="how-it-works" class="header">
+                      <h3>How It Works?</h3>
+                    </div>
+                    <p>
+                      A flame(IR) sensor detects the existence of fire. The flame sensor and the opening of the water pipe are set parallely directed at the same direction. This subsystem is placed over a servo motor. The servo motor constantly rotates from about -75&#176; to 75&#176; and thus moves the sensor and helps to check fire. When the sensor gets any fire signal, it halts and check for confirmation about fire existence. As soon as, it is confirmed about a fire incident, the GSM module sends an alert SMS to the preset mobile number, e.g. authority's number. Then it starts throwing water at the fire incident as long as the sensor detects the existence of fire. If the fire is extinguished, the servo motor again starts rotating and checking for fire.
+                    </p>
+
+                    <div id="equipments" class="header">
+                            <h3>Equipments</h3>
+                    </div>
+                    <div style="padding: 5%">
+                      <table>
+                        <tr>
+                          <th>Name</th>
+                          <th>Model</th>
+                          <th>Quantity</th>
+                        </tr>
+                        <tr>
+                          <td>Microcontroller</td>
+                          <td>ATmega32</td>
+                          <td>2</td>
+                        </tr>
+                        <tr>
+                          <td>Flame(IR) Sensor</td>
+                          <td>1-Channel</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>Servo Motor</td>
+                          <td>MG995</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>Motor Driver</td>
+                          <td>L298</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>12V DC Water Pump Motor</td>
+                          <td>-</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>GSM Module</td>
+                          <td>A6</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>LCD Module</td>
+                          <td>16x2</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>LED</td>
+                          <td>Red</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>12V Battery</td>
+                          <td>-</td>
+                          <td>1</td>
+                        </tr>
+                        <tr>
+                          <td>5V Power Supply</td>
+                          <td>-</td>
+                          <td>2</td>
+                        </tr>
+                        <caption style="text-align: center; font-size: 18px;">Table 1: List of components</caption>
+                      </table>
+                    </div>
+
+                    <div id="block-diagram" class="header">
+                      <h3>Block Diagram</h3>
+                    </div>
+                    <div style="padding: 5%; text-align: center;">
+                      <figure>
+                          <img src="Block Diagram.png" alt="Block diagram of ATmega FireFighter" style="padding-bottom: 10px;">
+                          <figcaption style="text-align: center; font-size: 18px;">Fig.1 - Block diagram of <em>ATmega FireFighter</em></figcaption>
+                      </figure>
+                    </div>
+
+                    <div id="algorithm" class="header">
+                            <h3>Algorithm</h3>
+                    </div>
+                    <p>
+                      This is a high-level algorithm of our system's operation:
+                    </p>
+                    <div style="padding: 2px 5% 10px 5%; font-size: 18px;">
+                      <div style="background-color: whitesmoke">
+                        <ol type="1">
+                            <li><code>initialize all register</code></li>
+                            <li><code>start sweeping servo motor</code></li>
+                            <li><code>read data from flame sensor</code></li>
+                            <li><code>perform analog-to-digital conversion on that data</code></li>
+                            <li><code>store converted data into sensor_reading</code></li>
+                            <li>
+                              <code><b>if</b> sensor_reading &lt FIRE_THRESHOLD</code>
+                              <ol type="1">
+                                <li><code>stop servo motor</code></li>
+                                <li><code>read more values from sensor</code></li>
+                                <li>
+                                  <code><b>if</b> sensor_reading is persistent i.e. fire is confirmed</code>
+                                  <ol type="1">
+                                    <li><code>send SMS from GSM module</code></li>
+                                    <li><code>turn on pump to throw water and move the servo motor at small angle keeping the fire event at the center</code></li>
+                                    <li><code>to check if fire is extinguished <b>goto step(3)</b><i>// <b>if</b> sensor_reading < FIRE_THRESHOLD</i></code></li>
+                                  </ol>
+                                </li>
+                                <li><code><b>else</b> continue sweeping the servo motor</code></li>
+
+                              </ol>
+                            </li>
+                            <li><code><b>else</b> continue sweeping the servo motor</code></li>
+                        </ol>
+                      </div>
+                    </div>
+                    </code>
+
+
+                    <div id="hardware-part" class="header">
+                      <h3>Hardware Part</h3>
+                    </div>
+
+                    <p>
+                        Our hardware part consists of a flame sensor, a servo motor, a motor driver, a dc motor, a gsm module and a lcd module. In this section, we will briefly show the design of our total hardware systems as well as the working principles of the mentioned components.
+                    </p>
+                    <div id="flame-sensor" style="padding-left: 5%;">
+                      <h4 style="font-size: 18px;">Flame Sensor</h4>
+                    </div>
+                    <p>
+                        The flame sensor is actually an IR sensor. It can detect the IR radiation caused from fire events. The sensor we used has a digital output pin. But while working with it, we discovered this pin gives analog output too. Actually the pin gives an output voltage ranging from 0 to 5V. So we converted this analog data to digital data using the ADC(analog-to-digital converter) of ATmega32. After ADC operation we were able to represent the sensor reading as a value ranging from 0 to 1023. Values near 1023 mean 'No fire' and lower values mean the sensor has detected IR emission.
+                    </p>
+                    <figure style="padding-left: 5%; text-align: center;">
+                      <img src="flame-sensor.jpg" style="width: 400px; height: 350px;">
+                      <figcaption style="text-align: center; font-size: 16px;">Fig.2 - Flame Sensor</figcaption>
+                    </figure>
+
+                    <div id="servo-motor" style="padding-left: 5%;">
+                      <h4 style="font-size: 18px;">Servo Motor</h4>
+                    </div>
+                    <p>
+                      Servo motor is an electromechanical actuator which is very useful to move some object to a particular position by rotation and to hold that there. We used servo motor to rotate the flame sensor and the water nozzle. To control the servo motor, we had to feed a control signal from the microcontroller to the servo. We used the PWM feature of ATmega32 to generate the control signal.
+                    </p>
+                    <p>
+                      To generate PWM signal, we used Timer1 module of ATmega32 microcontroller which is a 16 bit timer. Timer1 has two PWM channels(A and B). We used ATmega32's internal clock frequency which is 1MHz. We took 1 as prescaler to get the original clock frequency as timer frequency. So, the timer got 1&mu;s time period. We also used the <em>Fast PWM</em> mode. In our selected timer mode, ICR1 gets the top value of the timer.
+                    </p>
+                    <p>
+                      f<sub>pwm</sub> = <sup>f<sub>cpu</sub></sup>&frasl;<sub>N(1+TOP)</sub><br/>
+                      => TOP = <sup>f<sub>cpu</sub></sup>&frasl;<sub>N &times; f<sub>pwm</sub></sub> - 1<br/>
+                      => TOP = <sup>1 MHz</sup>&frasl;<sub>1 &times; 50 Hz</sub> - 1 = 19999<br/>
+                      So, we set ICR1 = 19999
+                    </p>
+                    <p>
+                      According to the datasheet, to set the servo to the center position we need to feed the servo a PWM signal of 1.5 ms uptime. To set the servo to it's leftmost position the signal uptime should be 1 ms and to set it to it's rightmost position the signal uptime should be 2 ms. However, in practical we had to tweak the values a little to get our expected result. The values we used are given in the table below.
+                    </p>
+
+                    <div style="padding-left: 5%;">
+                      <table>
+                        <tr>
+                          <th>Position</th>
+                          <th>Pulse Width(&mu;s)</th>
+                        </tr>
+                        <tr>
+                          <td>Full left</td>
+                          <td>900</td>
+                        </tr>
+                        <tr>
+                          <td>Center</td>
+                          <td>1500</td>
+                        </tr>
+                        <tr>
+                          <td>Full right</td>
+                          <td>2100</td>
+                        </tr>
+                        <caption style="text-align: center; font-size: 18px; padding: 2px;">Table 2: Servo Motor position with corresponding pulse width</caption>
+                      </table>
+                    </div>
+                    <p>
+                      The main problem of the servo motor is that it cannot give a feedback according to the current situation. We can give it command to move to a certain position, but we cannot stop it before it reaches that position. So we had to be tricky to solve this problem. Instead of sweeping the whole area by a single movement i.e. from left to all the way right, or vice versa, we moved the servo by smaller steps. In this way, we can check the sensor output after every step and can take the decision whether we should halt the servo or not. Still there was error when the decision had to be taken between consecutive steps, but the error margin was small and overall this idea was a good workaround.
+                    </p>
+                    <figure style="padding-left: 5%; text-align: center;">
+                      <img src="mg995-servo-motor-13kg.jpg" style="width: 450px; height: 400px;">
+                      <img src="MG995-Servo-Pinout.png" style="width: 480px; height: 350px;">
+                      <figcaption style="text-align: center; font-size: 16px;">Fig.3 - MG995 TowerPro Servo Motor</figcaption>
+                    </figure>
+                    <p><a href="https://www.electronicoscaldas.com/datasheet/MG995_Tower-Pro.pdf">Datasheet of MG995 TowerPro Servo motor</a></p>
+
+                    <div id="pump-motor" style="padding-left: 5%;">
+                      <h4 style="font-size: 18px;">Motor Driver and Pump Motor</h4>
+                    </div>
+                    <p>
+                      We used a 12V DC motor to pump out and throw water to the fire event. To control the DC motor we used a motor driver. A motor driver can control upto two motors. So, it has two pairs of input and output pins. As we need to control a single motor we used the pair-1 pins(EN1, IN1, IN2, OUT1, OUT2). Motor status as well as rotational direction can be controlled using four types of combination of control signal to pin IN1 and IN2. The combinations are shown in the table below. However, to turn on the motor and give it a clockwise rotation, we supply IN1 low voltage and IN2 high voltage from the microcontroller.
+                    </p>
+                    <div style="padding-left: 5%;">
+                      <table>
+                        <tr>
+                          <th>PC0/IN1</th>
+                          <th>PC1/IN2</th>
+                          <th>Motor Status</th>
+                        </tr>
+                        <tr>
+                          <td>Low</td>
+                          <td>Low</td>
+                          <td>Stops</td>
+                        </tr>
+                        <tr>
+                          <td>Low</td>
+                          <td>High</td>
+                          <td>Clockwise</td>
+                        </tr>
+                        <tr>
+                          <td>High</td>
+                          <td>Low</td>
+                          <td>Anti-Clockwise</td>
+                        </tr>
+                        <tr>
+                          <td>High</td>
+                          <td>High</td>
+                          <td>Stops</td>
+                        </tr>
+                        <caption style="text-align: center; font-size: 18px; padding: 2px;">Table 3: Control Signals and Motor Status</caption>
+                      </table>
+                    </div>
+                    <figure style="padding-left: 5%; text-align: left;">
+                      <img src="motor-driver.jpg" style="width: 400px; height: 380px;">
+                      <figcaption style="text-align: justify; font-size: 16px;">Fig.4 - Motor Driver</figcaption>
+                    </figure>
+
+                    <div id="gsm-module" style="padding-left: 5%;">
+                      <h4 style="font-size: 18px;">GSM Module</h4>
+                    </div>
+                    <p>
+                      GSM stands for <em>Global System for Mobile Communication</em> which is a standard to describe the protocols for second-generation <em>(2G)</em> digital cellular networks used by mobile devices.  GSM module gives us the facility to establish a communication between a mobile-device and the module. We used <em>A6 GSM module</em> for our project. A6 GSM module needs an USB cable to power up. The RXD pin was connected with ATmega32's TXD(pin 15) and the TXD pin was connected with ATmega32's RXD(pin 14) to transmit data between the GSM module and the microcontroller. At first we established a network between the GSM module and the ATmega32. Then whenever our sensor detected a fire occurance, we sent a message to the respective authority about the fire incident from the GSM module's sim card using ATmega32's UART communication.<br/>
+                          The detailed wire connections of the GSM module with the ATmega32 microcontroller is showed in the <a href="#pin-diagram">Detailed Pin Diagram.</a>
+                    </p>
+                    <figure style="padding-left: 5%; text-align: center">
+                      <img src="a6-gsm.jpg" style="width: 500px; height: 400px; padding-right: 100px;">
+                      <img src="a6-gsm-1.jpg" style="width: 400px; height: 400px;">
+                      <figcaption style="text-align: center; font-size: 16px;">Fig.5 - A6 GSM Module</figcaption>
+                    </figure>
+
+                    <div id="lcd-module" style="padding-left: 5%;">
+                      <h4 style="font-size: 18px;">LCD Module</h4>
+                    </div>
+                    <p>
+                        We used a 16x2 LCD module to show the value read from the flame sensor and show relevant messages according to the situation. We know values near 1023 mean 'No fire'. During a 'No fire' situation, we only printed the value from the flame sensor. When the IR reading from the sensor went below our threshold value which most possibly meant a fire incident had occured
+                        (the fire incident was ensured after observing some repetitive values), we printed a message showing "Fire!!!" and also printed the corresponding sensor_reading in the next line. After the pump had been started by the motor driver, we used the LCD module to show the message "Pump ON" and in the next line we showed the message "Throwing Water" until the fire had been extinguished by the water pump.
+                        In the LCD module, we used a potentiometer to control the contrast of the LCD module.The wire connections of the LCD module with the ATmega32 microcontroller is showed in the <a href="#pin-diagram">Detailed Pin Diagram.</a>
+                    </p>
+                    <figure style="padding-left: 5%; text-align: center;">
+                      <img src="lcd-illustration.png" style="width: 500px; height: 300px;">
+                      <figcaption style="text-align: center; font-size: 16px;">Fig.6 - 16x2 LCD Module</figcaption>
+                    </figure>
+                    <div id="software-part" class="header">
+                        <h3>Software Part</h3>
+                    </div>
+                    <p>
+                      The code for <em><b>ATmega FireFighter</b></em> is written from scratch, except the lcd.h header file. lcd.h is built by <a href="https://electrosome.com/interfacing-lcd-atmega32-microcontroller-atmel-studio/">electroSome</a>. The code is written in c language and compiled with the compiler of Atmel Studio IDE. We also used ExtremeBurner to load the hex file into the ATmega32 microcontroller.
+                    </p>
+                    <p>
+                      The software was designed in a way such that the program maintains some state according to the actual state of the system. The program takes necessary actions when a change of state is observed.
+                    </p>
+                    <p>
+                      At initialization state, all corresponding registers are initialized with appropriate values. Input and output pins are defined. We also set the servo motor to center position. When all the initialization is complete, the program enters sweeping state.
+                    </p>
+                    <p>
+                      In the sweeping state, we incrementally change the value of OCR1A to move servo to the right until it reaches it's rightmost position. Then the direction of movement is reversed. Thus the system checks the area infront of it. While the servo is moving, the program reads analog data from the flame sensor, performs an ADC operation and shows the value on lcd module. Whenever sensor data gives value under a certain threshold, program enters fire detection state.
+                    </p>
+                    <p>
+                      In the fire detection state, the program halts the servo and check if the values provided by the flame sensor are consistent. If the values are inconsistent the program assumes that as an false alarm and goes back to the sweeping state. Otherwise it enters extinguishing state.
+                    </p>
+                    <p>
+                      In this state, the program is confirmed about the fire incident. So at first it sends the secondary microcontroller(used to control the GSM) a signal. After recieving the signal, the microcontroller sends an alert message to a preset mobile number using the GSM module. Meanwhile the primary microcontroller turns on the pump motor by sending signal to the motor driver. In this state, the program moves the servo back and forth in a smaller angle by writing values to OCR1A, first incrementally and then decrementally. This movement keeps the fire event at the center and also materialize the idea of stopping the spreading of fire. After a time period, the program again enters the fire detection state to check whether the fire is extinguished.
+                    </p>
+                    <p>
+                      As we used a seperate microcontroller just to control the GSM module, we needed to write a seperate program for that microcontroller. Using two ATmega gives us the ability to perform two crutial tasks(extinguishing fire and sending alert message) parallely. We used the UART feature of ATmega32 to control the GSM module.
+                    </p>
+                    <p>
+                      As this software runs in a embedded system with limited memory and processing power, we tried to make our code as efficient as we could. Besides we wanted our code to be readable as well as understandable. The codes are also well documented.
+                    </p>
+                    <div style="padding: 5%; text-align: center;">
+                      <figure>
+                          <img src="flow_chart.png" alt="Flow Chart of ATmega FireFighter" style="padding-bottom: 10px; width: 700px; height: 900px;">
+                          <figcaption style="text-align: center; font-size: 18px;">Fig.7 - Flow Chart of <em>ATmega FireFighter</em></figcaption>
+                      </figure>
+                    </div>
+
+                    <div id="pin-diagram" class="header">
+                      <h3>Pin Diagram</h3>
+                    </div>
+                    <p>
+                      The overall circuit diagram of <em><b>ATmega FireFighter</b></em> is shown below.
+                    </p>
+                    <iframe src="Pin_Diagram.pdf" style="width: 100%; height: 100%; border: none;"></iframe>
+
+                    <div id="problem" class="header">
+                        <h3>Problem Faced</h3>
+                    </div>
+                    <p>
+                      As the flame sensor is sensible to the IR emission, presense of the sunlight was a real trouble. However we were able to reduce the problem by calibrating the sensor. Also the sensor should have a field of view of 60&deg; angle according to the manufacturer. But in practice it has a field of view of approximately 10&deg; angle. So the sensor can only detect the fire event if it happens at the same plane directly in front of it.
+                    </p>
+                    <p>
+                      The servo should move from -90&deg; to 90&deg; according to the datasheet. But in reality, the servo moves from approximately -75&deg; to 75&deg;. This narrows the surveillance area of the system. Also to achieve this much coverage we had to find a better working value of the uptime of PWM signal by trial and error.
+                    </p>
+                    <p>
+                      Using a GSM module with an atmega32 microcontroller might create lots of troubles in a hardware project. The frequency of the atmega32 was not similar to that of the GSM module. So, it created a huge problem to sync the frequencies of them. We solved it in the code. We had to fix a baud rate for the serial communication established between the atmega32 microcontroller and the GSM module. For this, we set specific values in the USART registers. The signals recieved by the GSM could not be transmitted smoothly most of the time, the reason of which was that the GSM was not configured correctly at first. Also we needed to power it directly from another 5V source to make it work fine.
+                    </p>
+                    <p>
+                      Due to inconsistent power supply sometimes, the Lcd module misses some bits during passing data from the microcontroller to the module and hence shows garbage values. We also faced similar issues. In such case, we had to reconnect the module's power supply to fix it back to work smoothly again.
+                    </p>
+                    <p>
+                      Sometimes due to the unexpected behaviour of the flame sensor, the system detected fire although the fire incident was happening at a small angular distance from the direction the sensor was pointing at. To solve this problem, we had to increase the range of water-throwing. We also made a sprinkler and got better result at extinguishing fire.
+                    </p>
+
+                    <div id="conclusion" class="header">
+                      <h3>Conclusion</h3>
+                    </div>
+                    <p>
+                      This firefighter works for a short range. Also, the flame sensor cannot move in the z-axis. So it is understandable that this prototype is not fit to work in a three dimensional plane.
+                    </p>
+                    <p>
+                      Nevertheless, this is a very low-cost solution to prevent any fire hazard inside any residence. Our future target with this project is to make the sensor movable in the z-axis.
+                      Also, we have a plan to make a movable bot out of it so that it can move,detect fire at any place inside the walls and extinguish it.
+                    </p>
+
+                    <div id="demonstration" class="header">
+                      <h3>Demonstration</h3>
+                    </div>
+                    <div style="text-align: center;">
+                    <iframe width="700" height="400" src="https://www.youtube.com/embed/78GH3xUtF9U" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+
+                    <div id="group-members" class="header">
+                        <h3>Group Members</h3>
+                    </div>
+                    <div style="padding-left: 5%;">
+                      <h4>Section A1:</h4>
+                      <ul style="list-style-type: square; font-size: 18px;">
+                        <li>Asif Imtial&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1605017)</li>
+                        <li>Hasibul Hisham&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1605009)</li>
+                        <li>Md.Shahrar Fatemi&nbsp;&nbsp;(1605007)</li>
+                      </ul>
+                    </div>
+
+                    <div id="instructors" class="header">
+                      <h3>Course Instructors</h3>
+                    </div>
+                    <div style="padding-left: 5%; font-size: 18px;">
+                    <ol type="1">
+                      <li>Md. Tareq Mahmood,<br/>Lecturer, CSE, BUET</li><br/>
+                      <li>Md. Masum Mushfiq,<br/>Lecturer, CSE, BUET</li><br/>
+                    </ol>
+                    </div>
+
+                </div>
+            </div>
+            <div class="page-footer">Department of CSE, BUET</div>
+        </div>
+    </body>
+</html>

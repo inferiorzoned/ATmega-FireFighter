@@ -1,9 +1,10 @@
 # ATmega FireFighter
 
-This is an ATmega32-based project done as the term project of CSE 316: Microcontrollers, Microprocessors and Embedded Systems sessional course. Me and my project collaborators ([imtial](https://github.com/imtial) & [shahrarswapnil](https://github.com/shahrarswapnil)) developed this system to constantly search for fire incidents in its surveillance area. In case of a fire incident, it alerts the place owner via mobile phone SMS from an emergency number and extinguishes the fire by throwing water directly to the source.
+This is an ATmega32-based project done as the term project of CSE 316: Microcontrollers, Microprocessors and Embedded Systems sessional course. Me and my project collaborators ([imtial](https://github.com/imtial) & [shahrarswapnil](https://github.com/shahrarswapnil)) developed this system to constantly search for fire incidents in its surveillance area. In case of a fire incident, it alerts the place owner or the corresponding authorities via mobile phone SMS from an emergency number and extinguishes the fire by throwing water directly to the fire source.
 
-### Video Demonstration
-Video demonstration of our project in [YouTube](https://www.youtube.com/watch?v=78GH3xUtF9U)
+### Video Demonstration (click)
+
+[![Demonstration](./Webpage/youtubeSS.png)](https://www.youtube.com/watch?v=78GH3xUtF9U "ATmega FireFighter demo")
 
 ### Basic Hardware Components
 1. ATmega32 Microcontroller
